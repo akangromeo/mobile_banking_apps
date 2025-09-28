@@ -36,17 +36,17 @@ final ThemeData appTheme = ThemeData(
   textTheme: const TextTheme(
     // Digunakan untuk judul besar/header, menggunakan SemiBold (weight 600)
     headlineLarge: TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 32, color: AppColors.textBlack),
+        fontWeight: FontWeight.w500, fontSize: 32, color: Colors.white),
     headlineMedium: TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 24, color: AppColors.textBlack),
+        fontWeight: FontWeight.w500, fontSize: 24, color: Colors.white),
 
     // Digunakan untuk judul sub-bagian, menggunakan SemiBold
     titleLarge: TextStyle(
         fontWeight: FontWeight.w600, fontSize: 20, color: AppColors.textBlack),
     titleMedium: TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 16, color: AppColors.textBlack),
+        fontWeight: FontWeight.w600, fontSize: 18, color: AppColors.textBlack),
     titleSmall: TextStyle(
-        fontWeight: FontWeight.w600, fontSize: 14, color: AppColors.textBlack),
+        fontWeight: FontWeight.w600, fontSize: 16, color: AppColors.textBlack),
 
     // Digunakan untuk teks isi/body, menggunakan Medium (weight 500)
     bodyLarge: TextStyle(
@@ -58,8 +58,8 @@ final ThemeData appTheme = ThemeData(
 
     // Digunakan untuk tombol dan caption
     labelLarge: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 14,
+        fontWeight: FontWeight.w300,
+        fontSize: 24,
         color: Colors.white), // Biasanya putih pada tombol
   ),
   // Tema App Bar
