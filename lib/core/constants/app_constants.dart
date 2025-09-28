@@ -8,5 +8,3 @@ class AppDesignConstants {
 
   static const double kCardElevation = 2.0;
 }
-
-
