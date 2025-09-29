@@ -6,11 +6,15 @@ import 'package:mobile_banking_apps/features/auth/presentation/screens/otp_scree
 import 'package:mobile_banking_apps/features/auth/presentation/screens/signup_screen.dart';
 import 'package:mobile_banking_apps/features/history/presentation/screens/history_screen.dart';
 import "package:mobile_banking_apps/features/home/presentation/screens/home_screen.dart";
+import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_input_amount_screen.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_input_pin_screen.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_result_screen.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_screen.dart';
 import 'package:mobile_banking_apps/features/settings/presentation/screens/setting_detail_screen.dart';
 import 'package:mobile_banking_apps/features/settings/presentation/screens/setting_screen.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
@@ -40,12 +44,26 @@ final GoRouter appRouter = GoRouter(
         child: OtpScreen(),
       ),
     ),
-
-    // GoRoute(
-    //   path: '/transfer',
-    //   pageBuilder: (context, state) =>
-    //       const MaterialPage(child: TransferScreen()),
-    // ),
+    GoRoute(
+      path: '/transfer',
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: TransferScreen()),
+    ),
+    GoRoute(
+      path: '/transfer-input-amount',
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: TransferDetailsScreen()),
+    ),
+    GoRoute(
+      path: '/transfer-input-pin',
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: TransferInputPinScreen()),
+    ),
+    GoRoute(
+      path: '/transfer-result-success',
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: TransferSuccessScreen()),
+    ),
     GoRoute(
       path: '/history',
       pageBuilder: (context, state) =>
