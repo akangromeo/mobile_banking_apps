@@ -44,8 +44,8 @@ class PrimaryButton extends StatelessWidget {
         ),
         child: isLoading
             ? const SizedBox(
-                height: 20,
-                width: 20,
+                height: 15,
+                width: 15,
                 child: CircularProgressIndicator(
                   color: Colors.white,
                   strokeWidth: 2,
@@ -55,8 +55,8 @@ class PrimaryButton extends StatelessWidget {
                 text,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
       ),

@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/constants/app_constants.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
 
-class KeepMeLoginCheckBox extends StatefulWidget {
-  const KeepMeLoginCheckBox({super.key});
+class AuthCheckBox extends StatefulWidget {
+  final String title;
+
+  const AuthCheckBox({
+    super.key,
+    required this.title,
+  });
 
   @override
-  State<KeepMeLoginCheckBox> createState() => _KeepMeLoginCheckBoxState();
+  State<AuthCheckBox> createState() => _AuthCheckBoxState();
 }
 
-class _KeepMeLoginCheckBoxState extends State<KeepMeLoginCheckBox> {
+class _AuthCheckBoxState extends State<AuthCheckBox> {
   bool _isChecked = false;
 
   void _toggleCheckbox() {
@@ -24,7 +29,9 @@ class _KeepMeLoginCheckBoxState extends State<KeepMeLoginCheckBox> {
       onTap: _toggleCheckbox,
       child: Padding(
         padding: const EdgeInsets.only(
+          top: AppDesignConstants.kDefaultMargin,
           left: AppDesignConstants.kDefaultMargin / 8,
+          right: AppDesignConstants.kDefaultMargin,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,11 +43,14 @@ class _KeepMeLoginCheckBoxState extends State<KeepMeLoginCheckBox> {
               },
               activeColor: AppColors.success,
             ),
-            Text(
-              'Keep me signed in',
-              style: appTheme.textTheme.labelMedium?.copyWith(
-                fontFamily: 'poppins',
-                letterSpacing: 0.75,
+            Flexible(
+              child: Text(
+                widget.title,
+                style: appTheme.textTheme.labelMedium?.copyWith(
+                  fontFamily: 'poppins',
+                  letterSpacing: 0.75,
+                  color: AppColors.textGrey,
+                ),
               ),
             ),
           ],
