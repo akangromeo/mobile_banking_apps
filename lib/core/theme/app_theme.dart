@@ -39,6 +39,8 @@ final ThemeData appTheme = ThemeData(
         fontWeight: FontWeight.w500, fontSize: 32, color: Colors.white),
     headlineMedium: TextStyle(
         fontWeight: FontWeight.w500, fontSize: 24, color: Colors.white),
+    headlineSmall: TextStyle(
+        fontWeight: FontWeight.w500, fontSize: 20, color: Colors.white),
 
     // Digunakan untuk judul sub-bagian, menggunakan SemiBold
     titleLarge: TextStyle(
