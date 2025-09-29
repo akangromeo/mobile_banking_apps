@@ -104,8 +104,10 @@ class OtpScreen extends StatelessWidget {
                   horizontal: AppDesignConstants.kDefaultPadding,
                 ),
                 child: Pinput(
-                  length: 6, // Jumlah kotak OTP
+                  length: 6,
                   defaultPinTheme: defaultPinTheme,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: defaultPinTheme.decoration!.copyWith(
                       border: Border.all(color: AppColors.blueSecondary),
