@@ -7,8 +7,13 @@ typedef TransactionData = Map<String, dynamic>;
 
 class TransactionItem extends StatelessWidget {
   final TransactionData transaction;
+  final VoidCallback? onTap;
 
-  const TransactionItem({super.key, required this.transaction});
+  const TransactionItem({
+    super.key,
+    required this.transaction,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,44 +31,48 @@ class TransactionItem extends StatelessWidget {
         );
     final String amountText = '${sign}Rp $formattedAmount';
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.only(right: 12.0),
-          child: Icon(
-            Icons.wallet,
-            color: Colors.lightBlue,
-            size: 24.0,
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                description,
-                style:
-                    appTheme.textTheme.bodySmall?.copyWith(color: Colors.black),
-              ),
-              const SizedBox(height: 2.0),
-              Text(
-                accountNumber,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.grey,
+    return InkWell(
+        onTap: onTap, // Tetapkan fungsi onTap dari properti
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(right: 12.0),
+                  child: Icon(
+                    Icons.wallet,
+                    color: Colors.lightBlue,
+                    size: 24.0,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Text(
-          amountText,
-          style: appTheme.textTheme.bodyMedium?.copyWith(
-            color: amountColor,
-          ),
-        ),
-      ],
-    );
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        description,
+                        style: appTheme.textTheme.bodySmall
+                            ?.copyWith(color: Colors.black),
+                      ),
+                      const SizedBox(height: 2.0),
+                      Text(
+                        accountNumber,
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  amountText,
+                  style: appTheme.textTheme.bodyMedium?.copyWith(
+                    color: amountColor,
+                  ),
+                ),
+              ],
+            )));
   }
 }

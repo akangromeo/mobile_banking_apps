@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // Data untuk ditampilkan pada BankInfoCard
   final List<Map<String, String>> _bankData = [
     {
       'bankName': 'Bank ABC',
@@ -110,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Menambahkan SmoothPageIndicator di bawah PageView
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SmoothPageIndicator(
