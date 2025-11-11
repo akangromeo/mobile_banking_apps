@@ -5,18 +5,72 @@ import 'network_config.dart';
 class ApiClient {
   final Dio _dio = NetworkConfig.createDio();
 
-  Future<Response> post(String path, {Map<String, dynamic>? data}) async {
+  /// GET
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
-      final response = await _dio.post(path, data: data);
+      final response = await _dio.get(
+        path,
+        queryParameters: params,
+        options: Options(headers: headers),
+      );
       return response;
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? params}) async {
+  /// POST
+  Future<Response> post(
+    String path, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? headers,
+  }) async {
     try {
-      final response = await _dio.get(path, queryParameters: params);
+      final response = await _dio.post(
+        path,
+        data: data,
+        options: Options(headers: headers),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  /// PUT
+  Future<Response> put(
+    String path, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final response = await _dio.put(
+        path,
+        data: data,
+        options: Options(headers: headers),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  /// DELETE
+  Future<Response> delete(
+    String path, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final response = await _dio.delete(
+        path,
+        data: data,
+        options: Options(headers: headers),
+      );
       return response;
     } on DioException catch (e) {
       throw _handleDioError(e);
