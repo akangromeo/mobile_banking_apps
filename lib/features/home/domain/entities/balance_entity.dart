@@ -1,6 +1,6 @@
 class BalanceEntity {
   final String username;
-  final BigInt balance;
+  final double balance;
 
   BalanceEntity({
     required this.username,

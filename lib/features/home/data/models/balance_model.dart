@@ -2,7 +2,7 @@ import 'package:mobile_banking_apps/features/home/domain/entities/balance_entity
 
 class BalanceModel {
   final String username;
-  final BigInt balance;
+  final double balance;
 
   BalanceModel({
     required this.username,

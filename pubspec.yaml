@@ -36,6 +36,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_dotenv: ^6.0.0
+  get_it: ^9.0.5
   go_router: ^16.2.4
   google_nav_bar: ^5.0.7
   http: ^1.6.0
@@ -76,3 +77,4 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - .env

@@ -15,15 +15,18 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeLoading());
 
     try {
-      final results = await Future.wait([
-        homeRepository.getBalance(),
-        homeRepository.getCards(),
-      ]);
+      final balanceResult = await homeRepository.getBalance();
+      final cardsResult = await homeRepository.getCards();
 
-      emit(HomeLoaded(
-        balance: results[0] as BalanceEntity,
-        cards: results[1] as List<CardEntity>,
-      ));
+      balanceResult.fold(
+        (failure) => emit(HomeError(failure.toString())),
+        (balance) {
+          cardsResult.fold(
+            (failure) => emit(HomeError(failure.toString())),
+            (cards) => emit(HomeLoaded(balance: balance, cards: cards)),
+          );
+        },
+      );
     } catch (e) {
       emit(HomeError(e.toString()));
     }
