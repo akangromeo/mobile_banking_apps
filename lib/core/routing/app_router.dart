@@ -69,7 +69,6 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) =>
           const MaterialPage(child: HistoryScreen()),
     ),
-
     GoRoute(
       path: '/settings',
       pageBuilder: (context, state) =>
