@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile_banking_apps/core/di/injector.dart';
+import 'package:mobile_banking_apps/core/services/auth_service.dart';
 import 'package:mobile_banking_apps/features/home/presentation/cubit/home_cubit.dart';
 import 'package:mobile_banking_apps/features/home/presentation/widgets/button_card.dart';
 import 'package:mobile_banking_apps/features/home/presentation/widgets/transaction_history_card.dart';
@@ -57,11 +60,22 @@ class _HomeViewState extends State<HomeView> {
                             'assets/icons/logo-name.png',
                             height: 50,
                           ),
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.settings, color: Colors.white),
-                              SizedBox(width: 16),
-                              Icon(Icons.logout, color: Colors.white),
+                              const Icon(Icons.settings, color: Colors.white),
+                              const SizedBox(width: 16),
+                              InkWell(
+                                onTap: () {
+                                  // 1. Hapus token
+                                  sl<AuthService>().logout();
+                                  // 2. Navigasi ke login
+                                  if (mounted) {
+                                    context.go('/login');
+                                  }
+                                },
+                                child: const Icon(Icons.logout,
+                                    color: Colors.white),
+                              ),
                             ],
                           ),
                         ],
