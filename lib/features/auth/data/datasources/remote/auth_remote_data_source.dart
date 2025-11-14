@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 import 'package:mobile_banking_apps/core/exceptions/app_exception.dart';
 import 'package:mobile_banking_apps/core/network/api_client.dart';
 
@@ -22,6 +23,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       });
 
       if (response.statusCode == 200) {
+        final data = response.data;
+
+        var box = await Hive.openBox('authBox');
+        box.put('session_token', data['token']);
+
         return UserModel.fromJson(response.data);
       } else {
         throw ServerException("Failed to login. Please Try Again.");

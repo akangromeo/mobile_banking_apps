@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mobile_banking_apps/core/exceptions/app_exception.dart';
 import 'package:mobile_banking_apps/core/network/api_client.dart';
+import 'package:mobile_banking_apps/core/services/auth_service.dart';
 import 'package:mobile_banking_apps/features/home/data/models/balance_model.dart';
 import 'package:mobile_banking_apps/features/home/data/models/card_model.dart';
 import 'package:mobile_banking_apps/features/home/data/models/transaction_model.dart';
@@ -14,13 +15,15 @@ abstract class HomeRemoteDatasource {
 class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   final ApiClient apiClient;
 
-  HomeRemoteDatasourceImpl(this.apiClient);
+  final AuthService authService;
+
+  HomeRemoteDatasourceImpl(this.apiClient, this.authService);
 
   @override
   Future<BalanceModel> getBalance() async {
     try {
-      //todo nanti ngambil dari hive/local storage
-      const token = 'ca21ab16-8881-4225-ad84-63350c5162a1';
+      
+      final token = authService.token;
       final response = await apiClient.get('/user/balance', headers: {
         'X-Session-Token': token,
       });
@@ -38,8 +41,8 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<List<CardModel>> getCards() async {
     try {
-      //todo nanti ngambil dari hive/local storage
-      const token = 'ca21ab16-8881-4225-ad84-63350c5162a1';
+      
+      final token = authService.token;
       final response = await apiClient.get('/user/cards', headers: {
         'X-Session-Token': token,
       });
