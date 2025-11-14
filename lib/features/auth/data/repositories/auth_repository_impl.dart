@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:mobile_banking_apps/core/exceptions/app_exception.dart';
 import 'package:mobile_banking_apps/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:mobile_banking_apps/features/auth/domain/entities/user_entity.dart';
