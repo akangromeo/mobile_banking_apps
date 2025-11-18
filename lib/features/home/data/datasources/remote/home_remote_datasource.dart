@@ -14,7 +14,6 @@ abstract class HomeRemoteDatasource {
 
 class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   final ApiClient apiClient;
-
   final AuthService authService;
 
   HomeRemoteDatasourceImpl(this.apiClient, this.authService);
@@ -22,7 +21,6 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<BalanceModel> getBalance() async {
     try {
-      
       final token = authService.token;
       final response = await apiClient.get('/user/balance', headers: {
         'X-Session-Token': token,
@@ -41,7 +39,6 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<List<CardModel>> getCards() async {
     try {
-      
       final token = authService.token;
       final response = await apiClient.get('/user/cards', headers: {
         'X-Session-Token': token,
@@ -59,28 +56,21 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   }
 
   @override
-  Future<List<TransactionModel>> getTransactions() {
-    // TODO: implement getTransactions
-    throw UnimplementedError();
+  Future<List<TransactionModel>> getTransactions() async {
+    try {
+      final token = authService.token;
+      final response = await apiClient.get('/user/transactions', headers: {
+        'X-Session-Token': token,
+      });
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => TransactionModel.fromJson(json)).toList();
+      } else {
+        throw ServerException('Failed to get Cards');
+      }
+    } on DioException catch (e) {
+      throw ServerException(e.message ?? "Unknown Error.");
+    }
   }
-
-  // @override
-  // Future<List<TransactionModel>> getTransactions() async {
-  //   // try {
-  //   //   //todo nanti ngambil dari hive/local storage
-  //   //   final token = '';
-  //   //   final response = await apiClient.get('/user/transactions', headers: {
-  //   //     'X-Session-Token': token,
-  //   //   });
-
-  //   //   if (response.statusCode == 200) {
-  //   //     final List<dynamic> data = response.data;
-  //   //     return data.map((json) => TransactionModel.fromJson(json)).toList();
-  //   //   } else {
-  //   //     throw ServerException('Failed to get Cards');
-  //   //   }
-  //   // } on DioException catch (e) {
-  //   //   throw ServerException(e.message ?? "Unknown Error.");
-  //   // }
-  // }
 }

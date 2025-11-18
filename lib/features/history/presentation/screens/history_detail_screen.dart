@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
 import 'package:mobile_banking_apps/features/history/presentation/widgets/history_detail_block.dart';
 import 'package:mobile_banking_apps/features/history/presentation/widgets/history_status_card.dart';
-
-typedef TransactionData = Map<String, dynamic>;
+import 'package:mobile_banking_apps/features/home/domain/entities/transaction_entity.dart';
 
 class HistoryDetailScreen extends StatelessWidget {
-  final TransactionData transactionData;
+  final TransactionEntity transactionData;
 
   const HistoryDetailScreen({
     super.key,
@@ -16,20 +15,14 @@ class HistoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String transactionType = 'IDR Transfer';
-    final String status = 'Transfer Successful';
-    final String dateTime = '26 Sept 2025 | 22:40';
-    final String transferMethod = 'BI Fast';
-    final String transferID = 'TFID';
-    final double transactionFee = 2500.0;
-
     final String receiverName =
-        transactionData['description'].toString().split(' - ').last;
-    final double amount = transactionData['amount'] as double;
-    final double totalTransaction = amount + transactionFee;
+        transactionData.description.toString().split(' - ').last;
+    final double amount = transactionData.amount;
+    final double totalTransaction = amount;
 
-    final String sourceName = 'Name';
-    final String sourceAccount = 'Bank Name - 1233313113';
+    const String sourceName = 'Name';
+    // todo there's no source
+    // const String sourceAccount = 'Bank Name - 1233313113';
 
     return Scaffold(
       backgroundColor: AppColors.grey,
@@ -38,19 +31,20 @@ class HistoryDetailScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 40),
             HistoryStatusCard(
-              transactionType: transactionType,
-              status: status,
-              dateTime: dateTime,
+              transactionType: transactionData.type,
+              status: transactionData.status,
+              dateTime: transactionData.timestamp,
               onClose: () => Navigator.of(context).pop(),
             ),
             HistoryDetailsBlock(
               transactionData: transactionData,
               receiverName: receiverName,
-              sourceAccount: sourceAccount,
-              transferMethod: transferMethod,
-              transferID: transferID,
+              sourceAccount: sourceName,
+              transferMethod: transactionData.timestamp,
+              transferID: transactionData.id.toString(),
               amount: amount,
-              transactionFee: transactionFee,
+              //todo no transaction fee
+              transactionFee: 0,
               totalTransaction: totalTransaction,
               sourceName: sourceName,
             ),

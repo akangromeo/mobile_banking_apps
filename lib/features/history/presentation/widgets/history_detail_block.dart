@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/constants/app_constants.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
-
-typedef TransactionData = Map<String, dynamic>;
+import 'package:mobile_banking_apps/features/home/domain/entities/transaction_entity.dart';
 
 class HistoryDetailsBlock extends StatelessWidget {
-  final TransactionData transactionData;
+  final TransactionEntity transactionData;
   final String receiverName;
   final String sourceAccount;
   final String transferMethod;
