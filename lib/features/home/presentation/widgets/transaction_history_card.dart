@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
+import 'package:mobile_banking_apps/features/home/domain/entities/transaction_entity.dart';
 
 import 'package:mobile_banking_apps/features/home/presentation/widgets/transaction_item.dart';
 
 typedef TransactionData = Map<String, dynamic>;
 
 class TransactionHistory extends StatelessWidget {
-  const TransactionHistory({super.key});
+  final List<TransactionEntity> transactions;
+
+  const TransactionHistory({
+    super.key,
+    required this.transactions,
+  });
 
   final List<TransactionData> _dummyTransactions = const [
     {
@@ -46,11 +52,12 @@ class TransactionHistory extends StatelessWidget {
     },
   ];
 
-  Map<String, List<TransactionData>> _groupByDate(
-      List<TransactionData> transactions) {
-    Map<String, List<TransactionData>> grouped = {};
+  Map<String, List<TransactionEntity>> _groupByDate(
+    List<TransactionEntity> transactions,
+  ) {
+    Map<String, List<TransactionEntity>> grouped = {};
     for (var tx in transactions) {
-      String dateKey = tx['date'] as String;
+      String dateKey = tx.timestamp;
       if (!grouped.containsKey(dateKey)) {
         grouped[dateKey] = [];
       }
@@ -61,7 +68,7 @@ class TransactionHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final groupedTransactions = _groupByDate(_dummyTransactions);
+    final groupedTransactions = _groupByDate(transactions);
     final List<String> dateKeys = groupedTransactions.keys.toList();
 
     return Container(
@@ -96,7 +103,7 @@ class TransactionHistory extends StatelessWidget {
             padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               String dateKey = dateKeys[index];
-              List<TransactionData> transactions =
+              List<TransactionEntity> transactions =
                   groupedTransactions[dateKey]!;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,12 +1,10 @@
 // transaction_item.dart
 import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
-
-// Tipe data sederhana (tanpa model terpisah)
-typedef TransactionData = Map<String, dynamic>;
+import 'package:mobile_banking_apps/features/home/domain/entities/transaction_entity.dart';
 
 class TransactionItem extends StatelessWidget {
-  final TransactionData transaction;
+  final TransactionEntity transaction;
   final VoidCallback? onTap;
 
   const TransactionItem({
@@ -17,10 +15,10 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isCredit = transaction['isCredit'] as bool;
-    final double amount = transaction['amount'] as double;
-    final String description = transaction['description'] as String;
-    final String accountNumber = transaction['accountNumber'] as String;
+    final bool isCredit = (transaction.type == "deposit");
+    final double amount = transaction.amount;
+    final String description = transaction.description;
+    final String accountNumber = transaction.status;
 
     final Color amountColor = isCredit ? Colors.green : Colors.black;
     final String sign = isCredit ? '+ ' : '- ';

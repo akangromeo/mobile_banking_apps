@@ -43,8 +43,21 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<String, List<TransactionEntity>>> getTransactions() {
-    // TODO: implement getTransactions
-    throw UnimplementedError();
+  Future<Either<String, List<TransactionEntity>>> getTransactions() async {
+    try {
+      final transactionsModel = await homeRemoteDatasource.getTransactions();
+
+      return Right(
+        transactionsModel
+            .map(
+              (e) => e.toEntity(),
+            )
+            .toList(),
+      );
+    } on ServerException catch (e) {
+      return Left(e.message);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 }

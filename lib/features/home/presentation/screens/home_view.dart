@@ -33,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
           } else if (state is HomeLoaded) {
             final cards = state.cards;
             final username = state.balance.username;
+            final transactions = state.transactions;
             return SingleChildScrollView(
               child: Container(
                 width: double.infinity,
@@ -152,7 +153,9 @@ class _HomeViewState extends State<HomeView> {
                                 onTap: () {}),
                           ]),
                       const SizedBox(height: 16),
-                      const TransactionHistory(),
+                      TransactionHistory(
+                        transactions: transactions,
+                      ),
                       const SizedBox(height: 16),
                     ],
                   ),

@@ -12,7 +12,7 @@ class BalanceModel {
   factory BalanceModel.fromJson(Map<String, dynamic> json) {
     return BalanceModel(
       username: json['username'],
-      balance: json['balance'],
+      balance: json['balance'] ?? 0,
     );
   }
 
