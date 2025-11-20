@@ -15,9 +15,9 @@ class LoginCubit extends Cubit<LoginState> {
     final result = await loginUseCase(username: username, password: password);
 
     result.fold(
-        (failure) => emit(
-            state.copyWith(status: LoginStatus.failure, errorMessage: failure)),
-        (user) {
+        (failure) => emit(state.copyWith(
+            status: LoginStatus.failure,
+            errorMessage: failure.toString())), (user) {
       final authService = AuthService(Hive.box('authBox'));
       authService.saveToken(user.token);
       emit(state.copyWith(status: LoginStatus.success, user: user));

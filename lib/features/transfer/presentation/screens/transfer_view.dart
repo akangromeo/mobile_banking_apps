@@ -42,6 +42,7 @@ class _TransferViewState extends State<TransferView> {
               children: [
                 const TransferBackButton(
                   pBottom: 0,
+                  destination: "/",
                 ),
                 const CircleAvatar(
                   radius: 45,

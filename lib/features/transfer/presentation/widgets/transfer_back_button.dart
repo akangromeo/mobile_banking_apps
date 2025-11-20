@@ -9,12 +9,14 @@ class TransferBackButton extends StatelessWidget {
     this.pBottom = 20,
     this.pLeft = 18,
     this.pRight = 18,
+    this.destination = "/",
   });
 
   final double pTop;
   final double pBottom;
   final double pLeft;
   final double pRight;
+  final String destination;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class TransferBackButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              context.replace('/');
+              context.push(destination);
             },
             child: const Icon(
               Icons.arrow_back,
