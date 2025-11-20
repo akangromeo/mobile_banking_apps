@@ -21,4 +21,28 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(e.toString());
     }
   }
+
+  @override
+  Future<Either<String, UserEntity>> signup({
+    required String username,
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String birthdate,
+    required String password,
+  }) async {
+    try {
+      final user = await authRemoteDataSource.signup(
+        username: username,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        birthdate: birthdate,
+        password: password,
+      );
+      return Right(user.toEntity());
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

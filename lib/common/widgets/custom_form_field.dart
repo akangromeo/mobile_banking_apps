@@ -51,7 +51,7 @@ class _CustomFormField extends State<CustomFormField> {
   @override
   void initState() {
     super.initState();
-    _isObscure = widget.obscureText;
+    _isObscure = widget.isPasswordField ? true : widget.obscureText;
   }
 
   @override
@@ -95,7 +95,7 @@ class _CustomFormField extends State<CustomFormField> {
           suffixIcon: widget.isPasswordField
               ? IconButton(
                   icon: Icon(
-                    _isObscure ? Icons.visibility_off : Icons.visibility,
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
                     color: widget.iconColor,
                   ),
                   onPressed: () {

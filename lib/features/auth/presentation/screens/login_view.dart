@@ -28,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) {
         if (state.status == LoginStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage ?? 'Login failed')),
+            SnackBar(content: Text('Login failed')),
           );
         } else if (state.status == LoginStatus.success) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -49,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 60),
                   Image.asset('assets/icons/login-image.png'),
                   const SizedBox(height: 60),
                   Text(
@@ -65,10 +65,10 @@ class _LoginViewState extends State<LoginView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const HeadingFormText(headingText: 'Email Address'),
+                        const HeadingFormText(headingText: 'Username'),
                         CustomFormField(
-                          labelText: 'Email',
-                          hintText: 'jhondoe@gmail.com',
+                          labelText: 'Username',
+                          hintText: 'jhondoe',
                           controller: emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -101,20 +101,19 @@ class _LoginViewState extends State<LoginView> {
                                   vertical:
                                       AppDesignConstants.kDefaultPadding / 2,
                                 ),
-                                child: Text(
-                                  'Forgot Password',
-                                  style:
-                                      appTheme.textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.blueSecondary,
-                                    fontFamily: 'poppins',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+                                // child: Text(
+                                //   'Forgot Password',
+                                //   style:
+                                //       appTheme.textTheme.bodyMedium?.copyWith(
+                                //     color: AppColors.blueSecondary,
+                                //     fontFamily: 'poppins',
+                                //     fontWeight: FontWeight.w400,
+                                //   ),
+                                // ),
                               ),
                             ),
                           ],
                         ),
-                        const AuthCheckBox(title: 'Remember Me'),
                         const SizedBox(height: 16),
                         PrimaryButton(
                           text: 'Login',
@@ -133,7 +132,7 @@ class _LoginViewState extends State<LoginView> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

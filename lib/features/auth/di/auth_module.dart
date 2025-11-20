@@ -5,7 +5,9 @@ import 'package:mobile_banking_apps/features/auth/data/datasources/remote/auth_r
 import 'package:mobile_banking_apps/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:mobile_banking_apps/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mobile_banking_apps/features/auth/domain/usecases/login_usecase.dart';
+import 'package:mobile_banking_apps/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:mobile_banking_apps/features/auth/presentation/bloc/login_cubit.dart';
+import 'package:mobile_banking_apps/features/auth/presentation/bloc/signup_cubit.dart';
 
 Future<void> initAuthModule(GetIt sl) async {
   // Data Source
@@ -27,5 +29,15 @@ Future<void> initAuthModule(GetIt sl) async {
 
   sl.registerFactory<LoginCubit>(
     () => LoginCubit(sl<LoginUseCase>()),
+  );
+
+  // Usecase
+  sl.registerLazySingleton<SignupUseCase>(
+    () => SignupUseCase(sl<AuthRepository>()),
+  );
+
+// Cubit
+  sl.registerFactory<SignupCubit>(
+    () => SignupCubit(sl<SignupUseCase>()),
   );
 }
