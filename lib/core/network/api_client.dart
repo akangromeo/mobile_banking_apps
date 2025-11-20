@@ -86,9 +86,39 @@ class ApiClient {
 
   AppException _handleDioError(DioException e) {
     if (e.response != null) {
+      final data = e.response?.data;
+      String message = 'Unknown error';
       final statusCode = e.response?.statusCode ?? 0;
-      final message =
-          e.response?.data['detail'] ?? e.message ?? 'Unknown error';
+
+      if (data is Map) {
+        // 1. detail.message
+        if (data['detail'] is Map && data['detail']['message'] != null) {
+          message = data['detail']['message'].toString();
+        }
+        // 2. detail langsung string
+        else if (data['detail'] is String) {
+          message = data['detail'];
+        }
+        // 3. message langsung
+        else if (data['message'] != null) {
+          message = data['message'].toString();
+        }
+        // 4. errors (misalnya validasi)
+        else if (data['errors'] is Map) {
+          try {
+            message = data['errors'].values.map((v) => v.toString()).join(', ');
+          } catch (_) {
+            message = data['errors'].toString();
+          }
+        }
+        // 5. fallback semua isi Map di-string
+        else {
+          message = data.toString();
+        }
+      } else {
+        // Jika bukan Map → stringkan data atau ambil message Dio
+        message = data?.toString() ?? e.message ?? 'Unknown error';
+      }
 
       switch (statusCode) {
         case 401:

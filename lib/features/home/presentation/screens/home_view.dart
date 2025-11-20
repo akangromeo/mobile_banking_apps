@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
           } else if (state is HomeLoaded) {
             final cards = state.cards;
             final username = state.balance.username;
-            final transactions = state.transactions;
+            final transactions = state.transactions.getRange(0, 4).toList();
             return SingleChildScrollView(
               child: Container(
                 width: double.infinity,
@@ -144,9 +144,12 @@ class _HomeViewState extends State<HomeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ButtonCard(
-                                iconData: Icons.send,
-                                text: "Transfer",
-                                onTap: () {}),
+                              iconData: Icons.send,
+                              text: "Transfer",
+                              onTap: () {
+                                context.push('/transfer');
+                              },
+                            ),
                             ButtonCard(
                                 iconData: Icons.wallet,
                                 text: "Top Up",

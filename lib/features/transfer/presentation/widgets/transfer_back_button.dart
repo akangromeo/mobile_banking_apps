@@ -30,7 +30,7 @@ class TransferBackButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              context.pop();
+              context.replace('/');
             },
             child: const Icon(
               Icons.arrow_back,
