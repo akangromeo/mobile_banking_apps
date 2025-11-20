@@ -21,7 +21,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +103,7 @@ class _HomeViewState extends State<HomeView> {
                         child: PageView.builder(
                           controller: _pageController,
                           onPageChanged: (index) {
-                            setState(() {
-                              _currentPage = index;
-                            });
+                            setState(() {});
                           },
                           itemCount: cards.length,
                           itemBuilder: (context, index) {
@@ -128,7 +125,7 @@ class _HomeViewState extends State<HomeView> {
                               padding: const EdgeInsets.all(8.0),
                               child: SmoothPageIndicator(
                                 controller: _pageController,
-                                count: cards.length, // Jumlah card yang ada
+                                count: cards.length,
                                 effect: const SlideEffect(
                                   dotHeight: 10,
                                   dotWidth: 10,
@@ -153,7 +150,12 @@ class _HomeViewState extends State<HomeView> {
                             ButtonCard(
                                 iconData: Icons.wallet,
                                 text: "Top Up",
-                                onTap: () {}),
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Top up feature is coming soon!')));
+                                }),
                           ]),
                       const SizedBox(height: 16),
                       TransactionHistory(

@@ -51,7 +51,9 @@ class _SignupViewState extends State<SignupView> {
       listener: (context, state) {
         if (state.status == SignupStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Sign up failed')),
+            SnackBar(
+                content:
+                    Text(state.errorMessage.toString() ?? 'Sign up failed')),
           );
         } else if (state.status == SignupStatus.success) {
           ScaffoldMessenger.of(context).showSnackBar(

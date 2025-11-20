@@ -34,8 +34,7 @@ class TransferDetailsScreen extends StatefulWidget {
 }
 
 class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
-  final TextEditingController _amountController =
-      TextEditingController(text: '0');
+  final TextEditingController _amountController = TextEditingController();
   final PageController _pageController = PageController();
   int _currentPage = 0;
   TransferEntitiy? payload;
@@ -81,6 +80,7 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
                       children: [
                         const TransferBackButton(
                           pBottom: 0,
+                          destination: "/transfer",
                         ),
                         RecipientInfoWidget(
                           initials:
