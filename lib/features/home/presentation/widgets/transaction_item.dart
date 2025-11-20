@@ -15,7 +15,8 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isCredit = (transaction.type == "deposit");
+    final bool isCredit =
+        (transaction.type == "transfer_in" || transaction.type == "deposit");
     final double amount = transaction.amount;
     final String description = transaction.description;
     final String accountNumber = transaction.status;

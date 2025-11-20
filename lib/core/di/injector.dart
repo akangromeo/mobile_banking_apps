@@ -5,6 +5,7 @@ import 'package:mobile_banking_apps/core/services/auth_service.dart';
 import 'package:mobile_banking_apps/features/auth/di/auth_module.dart';
 import 'package:mobile_banking_apps/features/history/di/history_module.dart';
 import 'package:mobile_banking_apps/features/home/di/module_home.dart';
+import 'package:mobile_banking_apps/features/transfer/di/module_transfer.dart';
 
 final sl = GetIt.instance;
 
@@ -24,5 +25,6 @@ Future<void> _initFeatureModules() async {
   await initHomeModule(sl);
   await initAuthModule(sl);
   await initHistoryModule(sl);
+  await initTransferModule(sl);
   // kalau nanti ada fitur lain, tambahkan juga di sini
 }

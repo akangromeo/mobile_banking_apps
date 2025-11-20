@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile_banking_apps/features/transfer/domain/entities/transfer_entitiy.dart';
 
 class TransferSuccessScreen extends StatelessWidget {
-  const TransferSuccessScreen({super.key});
+  final TransferEntitiy data;
+
+  const TransferSuccessScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +23,7 @@ class TransferSuccessScreen extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.close, size: 30),
                   onPressed: () {
-                    // Aksi untuk kembali ke halaman utama/dashboard
-                    // Navigator.of(context).popUntil((route) => route.isFirst);
-                    print('Close button tapped');
+                    context.go('/');
                   },
                 ),
               ),
@@ -42,42 +44,12 @@ class TransferSuccessScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 8),
-              // Tanggal bisa dibuat dinamis menggunakan package intl
-              Text(
-                '29 Sep 2025 23:34:00 WITA',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
-                ),
-              ),
               const SizedBox(height: 40),
 
               // --- Kartu Detail Struk ---
-              _buildReceiptCard(),
+              _buildReceiptCard(data),
 
               const Spacer(), // Mendorong tombol ke bawah
-
-              // --- Tombol Share Receipt ---
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Logika untuk share struk
-                  print('Share receipt tapped');
-                },
-                icon: const Icon(Icons.share_outlined, color: Colors.white),
-                label: const Text(
-                  'Share Receipt',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -86,7 +58,7 @@ class TransferSuccessScreen extends StatelessWidget {
   }
 
   // Widget terpisah untuk kartu struk agar lebih rapi
-  Widget _buildReceiptCard() {
+  Widget _buildReceiptCard(TransferEntitiy data) {
     return Card(
       elevation: 4,
       shadowColor: Colors.grey.withOpacity(0.2),
@@ -101,7 +73,7 @@ class TransferSuccessScreen extends StatelessWidget {
             Text('Recipient', style: TextStyle(color: Colors.grey[600])),
             const SizedBox(height: 8),
             Text(
-              'DEAN AGNIA'.toUpperCase(),
+              data.recipientUname,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -109,32 +81,29 @@ class TransferSuccessScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            Text('XXXXXXXX', style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 4),
-            Text('Bank Central Asia - XXXXX8716',
+            Text('${data.externalBankName} - ${data.externalAccNumber}',
                 style: TextStyle(color: Colors.grey[600])),
             const SizedBox(height: 24),
 
             // --- Jumlah ---
             Text('Amount', style: TextStyle(color: Colors.grey[600])),
             const SizedBox(height: 8),
-            const Text(
-              'Rp 1.000.000',
-              style: TextStyle(
+            Text(
+              data.amount.toString(),
+              style: const TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 4),
-            Text('from TIA MONIKA', style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 24),
+
+            const SizedBox(height: 28),
 
             // --- Tujuan Transfer ---
             Text('Transfer Purpose', style: TextStyle(color: Colors.grey[600])),
             const SizedBox(height: 8),
-            const Text(
-              'Others',
-              style: TextStyle(
+            Text(
+              data.description,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -14,6 +15,11 @@ import 'package:mobile_banking_apps/features/auth/presentation/screens/signup_sc
 // HOME + FEATURES
 import 'package:mobile_banking_apps/features/history/presentation/screens/history_screen.dart';
 import 'package:mobile_banking_apps/features/home/presentation/screens/home_screen.dart';
+import 'package:mobile_banking_apps/features/transfer/domain/entities/transfer_entitiy.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/bloc/bank_cubit.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_cubit.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_input_cubit.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_destination_bank_screen.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_input_amount_screen.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_input_pin_screen.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_result_screen.dart';
@@ -69,9 +75,41 @@ final GoRouter appRouter = GoRouter(
           const MaterialPage(child: TransferScreen()),
     ),
     GoRoute(
+      path: '/select-bank',
+      builder: (context, state) {
+        return BlocProvider(
+          create: (_) => sl<BankCubit>()..loadBanks(),
+          child: const TransferDestinationBankScreen(),
+        );
+      },
+    ),
+    GoRoute(
       path: '/transfer-input-amount',
-      pageBuilder: (context, state) =>
-          const MaterialPage(child: TransferDetailsScreen()),
+      builder: (context, state) {
+        if (state.extra == null) {
+          return const Scaffold(
+            body: Center(child: Text("Missing transfer data")),
+          );
+        }
+
+        final data = state.extra as Map<String, dynamic>;
+
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => sl<TransferInputCubit>()..loadTransferInput(),
+            ),
+            BlocProvider(
+              create: (context) => sl<TransferCubit>(),
+            ),
+          ],
+          child: TransferDetailsScreen(
+            bank: data['bank'],
+            accountNumber: data['accountNumber'],
+            username: data['username'],
+          ),
+        );
+      },
     ),
     GoRoute(
       path: '/transfer-input-pin',
@@ -79,10 +117,15 @@ final GoRouter appRouter = GoRouter(
           const MaterialPage(child: TransferInputPinScreen()),
     ),
     GoRoute(
-      path: '/transfer-result-success',
-      pageBuilder: (context, state) =>
-          const MaterialPage(child: TransferSuccessScreen()),
-    ),
+        path: '/transfer-result-success',
+        pageBuilder: (context, state) {
+          final data = state.extra as TransferEntitiy;
+          return MaterialPage(
+            child: TransferSuccessScreen(
+              data: data,
+            ),
+          );
+        }),
 
     /// HISTORY
     GoRoute(
