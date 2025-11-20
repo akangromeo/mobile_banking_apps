@@ -7,6 +7,15 @@ import 'package:mobile_banking_apps/features/auth/data/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> login(String username, String password);
+
+  Future<UserModel> signup({
+    required String username,
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String birthdate,
+    required String password,
+  });
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -31,6 +40,35 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return UserModel.fromJson(response.data);
       } else {
         throw ServerException("Failed to login. Please Try Again.");
+      }
+    } on DioException catch (e) {
+      throw ServerException(e.message ?? "Unknown Error.");
+    }
+  }
+
+  @override
+  Future<UserModel> signup({
+    required String username,
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String birthdate,
+    required String password,
+  }) async {
+    try {
+      final response = await apiClient.post('/register', data: {
+        'username': username,
+        'email': email,
+        'first_name': firstName,
+        'last_name': lastName,
+        'birthdate': birthdate,
+        'password': password,
+      });
+
+      if (response.statusCode == 201) {
+        return UserModel.fromJson(response.data);
+      } else {
+        throw ServerException("Failed to signup. Please try again.");
       }
     } on DioException catch (e) {
       throw ServerException(e.message ?? "Unknown Error.");
