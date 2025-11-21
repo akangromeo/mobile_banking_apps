@@ -9,19 +9,18 @@ class ButtonCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const ButtonCard({
-    Key? key,
+    super.key,
     required this.iconData,
     required this.text,
     this.color,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     final cardWidth = (screenWidth - AppDesignConstants.kDefaultPadding) / 2.2;
-    final Color mainColor = color ?? Colors.lightBlue.shade300;
 
     return InkWell(
       onTap: onTap,
@@ -49,9 +48,12 @@ class ButtonCard extends StatelessWidget {
               color: AppColors.blueSecondary,
             ),
             const SizedBox(height: 10.0),
-            Text(text,
-                style: appTheme.textTheme.bodyLarge
-                    ?.copyWith(color: Colors.black)),
+            Text(
+              text,
+              style: appTheme.textTheme.bodyLarge?.copyWith(
+                color: Colors.black,
+              ),
+            ),
           ],
         ),
       ),

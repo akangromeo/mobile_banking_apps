@@ -31,47 +31,49 @@ class TransactionItem extends StatelessWidget {
     final String amountText = '${sign}Rp $formattedAmount';
 
     return InkWell(
-        onTap: onTap, // Tetapkan fungsi onTap dari properti
-        child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.only(right: 12.0),
-                  child: Icon(
-                    Icons.wallet,
-                    color: Colors.lightBlue,
-                    size: 24.0,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.only(right: 12.0),
+              child: Icon(
+                Icons.wallet,
+                color: Colors.lightBlue,
+                size: 24.0,
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    description,
+                    style: appTheme.textTheme.bodySmall
+                        ?.copyWith(color: Colors.black),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        description,
-                        style: appTheme.textTheme.bodySmall
-                            ?.copyWith(color: Colors.black),
-                      ),
-                      const SizedBox(height: 2.0),
-                      Text(
-                        accountNumber,
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(height: 2.0),
+                  Text(
+                    accountNumber,
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                Text(
-                  amountText,
-                  style: appTheme.textTheme.bodyMedium?.copyWith(
-                    color: amountColor,
-                  ),
-                ),
-              ],
-            )));
+                ],
+              ),
+            ),
+            Text(
+              amountText,
+              style: appTheme.textTheme.bodyMedium?.copyWith(
+                color: amountColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

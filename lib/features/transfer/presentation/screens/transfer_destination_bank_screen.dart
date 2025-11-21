@@ -33,8 +33,11 @@ class _TransferDestinationBankScreenState
     } else {
       setState(() {
         filteredBanks = allBanks
-            .where((bank) =>
-                bank.bankName.toLowerCase().contains(query.toLowerCase()))
+            .where(
+              (bank) => bank.bankName.toLowerCase().contains(
+                    query.toLowerCase(),
+                  ),
+            )
             .toList();
       });
     }

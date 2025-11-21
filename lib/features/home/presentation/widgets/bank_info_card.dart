@@ -32,10 +32,8 @@ class _BankInfoCardState extends State<BankInfoCard> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize
-              .min, // Menambahkan ini agar ukuran Column mengikuti child
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Left Section: Bank Info
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
