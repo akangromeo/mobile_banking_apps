@@ -108,7 +108,10 @@ class _HistoryViewState extends State<HistoryView> {
           return const SizedBox();
         },
       ),
-      bottomNavigationBar: const BottomNavigationUser(selectedIndex: 2),
+      bottomNavigationBar: const SafeArea(
+        bottom: true,
+        child: BottomNavigationUser(selectedIndex: 2),
+      ),
     );
   }
 }
