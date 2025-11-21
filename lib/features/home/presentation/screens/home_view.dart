@@ -182,6 +182,7 @@ class _HomeViewState extends State<HomeView> {
         },
       ),
       bottomNavigationBar: const SafeArea(
+        bottom: true,
         child: BottomNavigationUser(selectedIndex: 0),
       ),
     );
