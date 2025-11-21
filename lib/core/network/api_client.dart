@@ -122,7 +122,10 @@ class ApiClient {
 
       switch (statusCode) {
         case 401:
+          // AUTO LOGOUT jika token expired
+          authBox.delete('token');
           return UnauthorizedException(message);
+
         case 500:
           return ServerException(message);
         default:
