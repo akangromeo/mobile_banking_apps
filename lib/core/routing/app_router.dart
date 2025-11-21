@@ -15,6 +15,7 @@ import 'package:mobile_banking_apps/features/auth/presentation/screens/signup_sc
 // HOME + FEATURES
 import 'package:mobile_banking_apps/features/history/presentation/screens/history_screen.dart';
 import 'package:mobile_banking_apps/features/home/presentation/screens/home_screen.dart';
+import 'package:mobile_banking_apps/features/settings/presentation/bloc/profile_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/entities/transfer_entitiy.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/bank_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_cubit.dart';
@@ -135,11 +136,12 @@ final GoRouter appRouter = GoRouter(
     ),
 
     /// SETTINGS
+    /// SETTINGS
     GoRoute(
       path: '/settings',
-      pageBuilder: (context, state) =>
-          const MaterialPage(child: SettingsScreen()),
+      builder: (context, state) => const SettingsScreen(),
     ),
+
     GoRoute(
       path: '/settings-detail',
       pageBuilder: (context, state) {
