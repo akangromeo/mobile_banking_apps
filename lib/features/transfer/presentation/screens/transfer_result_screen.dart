@@ -17,7 +17,6 @@ class TransferSuccessScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // --- Tombol Close di Pojok Kanan Atas ---
               Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
@@ -28,8 +27,6 @@ class TransferSuccessScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // --- Status Sukses ---
               const Icon(
                 Icons.check_circle,
                 color: Colors.green,
@@ -45,11 +42,8 @@ class TransferSuccessScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 40),
-
-              // --- Kartu Detail Struk ---
               _buildReceiptCard(data),
-
-              const Spacer(), // Mendorong tombol ke bawah
+              const Spacer(),
             ],
           ),
         ),
@@ -57,55 +51,79 @@ class TransferSuccessScreen extends StatelessWidget {
     );
   }
 
-  // Widget terpisah untuk kartu struk agar lebih rapi
   Widget _buildReceiptCard(TransferEntitiy data) {
     return Card(
-      elevation: 4,
-      shadowColor: Colors.grey.withOpacity(0.2),
+      elevation: 3,
+      shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 22),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // --- Penerima ---
-            Text('Recipient', style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 8),
+            Text(
+              'Recipient',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 4),
             Text(
               data.recipientUname,
               style: const TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
+                fontWeight: FontWeight.w700,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 4),
-            Text('${data.externalBankName} - ${data.externalAccNumber}',
-                style: TextStyle(color: Colors.grey[600])),
+            Text(
+              '${data.externalBankName} - ${data.externalAccNumber}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
             const SizedBox(height: 24),
-
-            // --- Jumlah ---
-            Text('Amount', style: TextStyle(color: Colors.grey[600])),
-            const SizedBox(height: 8),
+            Divider(color: Colors.grey.shade300, thickness: 1),
+            const SizedBox(height: 20),
+            Text(
+              'Amount',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 6),
             Text(
               data.amount.toString(),
               style: const TextStyle(
-                fontSize: 32,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 1,
               ),
             ),
-
             const SizedBox(height: 28),
-
-            // --- Tujuan Transfer ---
-            Text('Transfer Purpose', style: TextStyle(color: Colors.grey[600])),
+            Divider(color: Colors.grey.shade300, thickness: 1),
+            const SizedBox(height: 20),
+            Text(
+              'Transfer Purpose',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+            ),
             const SizedBox(height: 8),
             Text(
               data.description,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],

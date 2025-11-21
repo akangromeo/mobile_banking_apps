@@ -6,25 +6,21 @@ import 'package:mobile_banking_apps/features/home/domain/entities/transaction_en
 class HistoryDetailsBlock extends StatelessWidget {
   final TransactionEntity transactionData;
   final String receiverName;
-  final String sourceAccount;
   final String transferMethod;
   final String transferID;
   final double amount;
   final double transactionFee;
   final double totalTransaction;
-  final String sourceName;
 
   const HistoryDetailsBlock({
     super.key,
     required this.transactionData,
     required this.receiverName,
-    required this.sourceAccount,
     required this.transferMethod,
     required this.transferID,
     required this.amount,
     required this.transactionFee,
     required this.totalTransaction,
-    required this.sourceName,
   });
 
   String _formatCurrency(double amount) {
@@ -81,10 +77,8 @@ class HistoryDetailsBlock extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow(context, 'Recipient', ''),
+            _buildDetailRow(context, 'Description', ''),
             Text(receiverName, style: appTheme.textTheme.titleSmall),
-            Text(sourceAccount,
-                style: const TextStyle(fontSize: 14, color: Colors.grey)),
             const Divider(height: 30),
             _buildDetailRow(context, 'Transfer Details', ''),
             const SizedBox(height: 10),
@@ -98,10 +92,6 @@ class HistoryDetailsBlock extends StatelessWidget {
                 context, 'Total Transaction', _formatCurrency(totalTransaction),
                 isTotal: true),
             const Divider(height: 30),
-            _buildDetailRow(context, 'Source of Fund', ''),
-            Text(sourceName, style: appTheme.textTheme.titleSmall),
-            Text(sourceAccount,
-                style: const TextStyle(fontSize: 14, color: Colors.grey)),
           ],
         ),
       ),

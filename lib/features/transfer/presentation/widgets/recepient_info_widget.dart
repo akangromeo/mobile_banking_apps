@@ -30,7 +30,6 @@ class RecipientInfoWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-
         Text(
           name,
           style: appTheme.textTheme.headlineSmall?.copyWith(
@@ -39,9 +38,9 @@ class RecipientInfoWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        // 3. Teks untuk info bank, dibuat lebih kecil dan berwarna abu-abu.
         Text(
           bankInfo,
+          textAlign: TextAlign.center,
           style: appTheme.textTheme.bodyLarge?.copyWith(
             color: AppColors.textGrey,
           ),

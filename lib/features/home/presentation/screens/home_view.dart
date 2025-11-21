@@ -6,7 +6,7 @@ import 'package:mobile_banking_apps/core/services/auth_service.dart';
 import 'package:mobile_banking_apps/features/home/presentation/cubit/home_cubit.dart';
 import 'package:mobile_banking_apps/features/home/presentation/widgets/button_card.dart';
 import 'package:mobile_banking_apps/features/home/presentation/widgets/transaction_history_card.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // Import SmoothPageIndicator
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:mobile_banking_apps/common/widgets/bottom_navigation_user.dart';
 import 'package:mobile_banking_apps/core/constants/app_constants.dart';
 import 'package:mobile_banking_apps/core/theme/app_theme.dart';
@@ -48,11 +48,12 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppDesignConstants.kDefaultPadding),
+                    horizontal: AppDesignConstants.kDefaultPadding,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 60),
+                      const SizedBox(height: 40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -62,13 +63,16 @@ class _HomeViewState extends State<HomeView> {
                           ),
                           Row(
                             children: [
-                              const Icon(Icons.settings, color: Colors.white),
+                              InkWell(
+                                  onTap: () {
+                                    context.go('/settings');
+                                  },
+                                  child: const Icon(Icons.settings,
+                                      color: Colors.white)),
                               const SizedBox(width: 16),
                               InkWell(
                                 onTap: () {
-                                  // 1. Hapus token
                                   sl<AuthService>().logout();
-                                  // 2. Navigasi ke login
                                   if (mounted) {
                                     context.go('/login');
                                   }
@@ -148,14 +152,17 @@ class _HomeViewState extends State<HomeView> {
                               },
                             ),
                             ButtonCard(
-                                iconData: Icons.wallet,
-                                text: "Top Up",
-                                onTap: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              'Top up feature is coming soon!')));
-                                }),
+                              iconData: Icons.wallet,
+                              text: "Top Up",
+                              onTap: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Top up feature is coming soon!'),
+                                  ),
+                                );
+                              },
+                            ),
                           ]),
                       const SizedBox(height: 16),
                       TransactionHistory(
@@ -174,7 +181,10 @@ class _HomeViewState extends State<HomeView> {
           return const SizedBox();
         },
       ),
-      bottomNavigationBar: const BottomNavigationUser(selectedIndex: 0),
+      bottomNavigationBar: const SafeArea(
+        bottom: true,
+        child: BottomNavigationUser(selectedIndex: 0),
+      ),
     );
   }
 }

@@ -20,10 +20,6 @@ class HistoryDetailScreen extends StatelessWidget {
     final double amount = transactionData.amount;
     final double totalTransaction = amount;
 
-    const String sourceName = 'Name';
-    // todo there's no source
-    // const String sourceAccount = 'Bank Name - 1233313113';
-
     return Scaffold(
       backgroundColor: AppColors.grey,
       body: SingleChildScrollView(
@@ -39,14 +35,12 @@ class HistoryDetailScreen extends StatelessWidget {
             HistoryDetailsBlock(
               transactionData: transactionData,
               receiverName: receiverName,
-              sourceAccount: sourceName,
               transferMethod: transactionData.timestamp,
               transferID: transactionData.id.toString(),
               amount: amount,
               //todo no transaction fee
               transactionFee: 0,
               totalTransaction: totalTransaction,
-              sourceName: sourceName,
             ),
             const SizedBox(height: 20),
           ],

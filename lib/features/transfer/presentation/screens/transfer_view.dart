@@ -15,6 +15,8 @@ class TransferView extends StatefulWidget {
 }
 
 class _TransferViewState extends State<TransferView> {
+  final _formKey = GlobalKey<FormState>();
+
   String _selectedBank = "Select bank";
   final accountNumberController = TextEditingController();
   final usernameController = TextEditingController();
@@ -29,81 +31,126 @@ class _TransferViewState extends State<TransferView> {
     }
   }
 
+  void _onNext() {
+    if (_selectedBank == "Select bank") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please select a destination bank")),
+      );
+      return;
+    }
+
+    if (_formKey.currentState!.validate()) {
+      context.push(
+        '/transfer-input-amount',
+        extra: {
+          "bank": _selectedBank,
+          "accountNumber": accountNumberController.text,
+          "username": usernameController.text,
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(
-              AppDesignConstants.kDefaultPadding / 2,
-            ),
-            child: Column(
-              children: [
-                const TransferBackButton(
-                  pBottom: 0,
-                  destination: "/",
-                ),
-                const CircleAvatar(
-                  radius: 45,
-                  backgroundColor: AppColors.grey,
-                  foregroundColor: AppColors.textBlack,
-                  child: Icon(
-                    Icons.send_to_mobile,
-                    size: 45,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                      AppDesignConstants.kDefaultPadding / 2,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const TransferBackButton(
+                            pBottom: 0,
+                            destination: "/",
+                          ),
+                          const CircleAvatar(
+                            radius: 45,
+                            backgroundColor: AppColors.grey,
+                            foregroundColor: AppColors.textBlack,
+                            child: Icon(
+                              Icons.send_to_mobile,
+                              size: 45,
+                            ),
+                          ),
+                          const SizedBox(
+                              height: AppDesignConstants.kDefaultMargin),
+                          Text(
+                            'Transfer to New Recipient',
+                            textAlign: TextAlign.center,
+                            style: appTheme.textTheme.headlineMedium?.copyWith(
+                              color: AppColors.textBlack,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: AppDesignConstants.kDefaultMargin * 5,
+                          ),
+
+                          /// BANK DROPDOWN
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: CustomBankDropdown(
+                              label: 'Destination Bank',
+                              selectedValue: _selectedBank,
+                              onTap: _navigateToBankSelection,
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          CustomFormField(
+                            keyboardType: TextInputType.number,
+                            labelText: 'Account Number',
+                            controller: accountNumberController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Account number cannot be empty";
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          CustomFormField(
+                            keyboardType: TextInputType.name,
+                            labelText: 'Beneficiary Name',
+                            controller: usernameController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Beneficiary Name cannot be empty";
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const Spacer(),
+
+                          PrimaryButton(
+                            text: 'Next',
+                            onPressed: _onNext,
+                            isLoading: false,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: AppDesignConstants.kDefaultMargin),
-                Text(
-                  textAlign: TextAlign.center,
-                  'Transfer to New Recipient',
-                  style: appTheme.textTheme.headlineMedium?.copyWith(
-                    color: AppColors.textBlack,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(
-                  height: AppDesignConstants.kDefaultMargin * 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: CustomBankDropdown(
-                    label: 'Destination Bank',
-                    selectedValue: _selectedBank,
-                    onTap: _navigateToBankSelection,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                CustomFormField(
-                  keyboardType: TextInputType.number,
-                  labelText: 'Account Number',
-                  controller: accountNumberController,
-                ),
-                const SizedBox(height: 16),
-                CustomFormField(
-                  keyboardType: TextInputType.name,
-                  labelText: 'Username',
-                  controller: usernameController,
-                ),
-                const SizedBox(height: 200),
-                PrimaryButton(
-                  text: 'Next',
-                  onPressed: () {
-                    context.push(
-                      '/transfer-input-amount',
-                      extra: {
-                        "bank": _selectedBank,
-                        "accountNumber": accountNumberController.text,
-                        "username": usernameController.text,
-                      },
-                    );
-                  },
-                  isLoading: false,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

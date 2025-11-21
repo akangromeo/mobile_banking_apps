@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +36,7 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   TransferEntitiy? payload;
+  final _formKey = GlobalKey<FormState>();
 
   String _selectedPurpose = 'Others';
   String _selectedMethods = 'BI-FAST Transfer';
@@ -89,7 +88,10 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
                           bankInfo: '${widget.bank} - ${widget.accountNumber}',
                         ),
                         const SizedBox(height: 25),
-                        _buildAmountInput(),
+                        Form(
+                          key: _formKey,
+                          child: _buildAmountInput(),
+                        ),
                         const SizedBox(height: 5),
                         _buildSourceOfFund(cards, balance),
                         const SizedBox(height: 20),
@@ -98,6 +100,7 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
                         PrimaryButton(
                           text: 'Next',
                           onPressed: () async {
+                            if (!_formKey.currentState!.validate()) return;
                             final String amount =
                                 'Rp ${_amountController.text}';
 
@@ -181,6 +184,26 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Amount cannot be empty";
+                    }
+
+                    // Hilangkan koma/titik pemisah sebelum parse
+                    final cleaned =
+                        value.replaceAll('.', '').replaceAll(',', '');
+
+                    final amount = double.tryParse(cleaned);
+                    if (amount == null) {
+                      return "Amount must be a valid number";
+                    }
+
+                    if (amount <= 0) {
+                      return "Amount must be greater than zero";
+                    }
+
+                    return null;
+                  },
                   style: appTheme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.textBlack,
@@ -251,7 +274,6 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
     );
   }
 
-  // Widget untuk Opsi Dropdown Transfer
   Widget _buildTransferOptions(List<MethodEntity> methods) {
     return Padding(
       padding: const EdgeInsets.all(
@@ -301,7 +323,6 @@ class _TransferDetailsScreenState extends State<TransferDetailsScreen> {
 
 Future<String?> showSupportedMethodsBottomSheet(
   BuildContext context, {
-  // Tambahkan parameter untuk menerima pilihan yang sedang aktif
   required List<MethodEntity> methods,
   required String currentMethods,
 }) {
@@ -399,10 +420,8 @@ Future<String?> showSupportedMethodsBottomSheet(
   );
 }
 
-// Ganti fungsi lama dengan yang ini
 Future<String?> showTransferPurposeBottomSheet(
   BuildContext context, {
-  // Tambahkan parameter untuk menerima pilihan yang sedang aktif
   required String currentPurpose,
 }) {
   final List<String> purposes = [
@@ -505,8 +524,6 @@ Future<String?> showTransferPurposeBottomSheet(
     },
   );
 }
-
-// Letakkan fungsi ini di dalam file transfer_details_screen.dart
 
 // Helper widget kecil untuk baris detail agar kode tidak berulang
 Widget _buildDetailRow(String label, String value, {bool isBold = false}) {

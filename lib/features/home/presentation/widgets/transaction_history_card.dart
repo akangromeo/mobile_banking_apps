@@ -14,44 +14,6 @@ class TransactionHistory extends StatelessWidget {
     required this.transactions,
   });
 
-  final List<TransactionData> _dummyTransactions = const [
-    {
-      'date': '26 Sept 2025',
-      'description': 'Bank Crupt - Bill Gates',
-      'accountNumber': '17023341431414141',
-      'amount': 100000.0,
-      'isCredit': false
-    },
-    {
-      'date': '26 Sept 2025',
-      'description': 'Bank It - Nadiem Makarim',
-      'accountNumber': '17023341431414141',
-      'amount': 150000.0,
-      'isCredit': false
-    },
-    {
-      'date': '25 Sept 2025',
-      'description': 'Bank Que - She Kolah',
-      'accountNumber': '17023341431414141',
-      'amount': 200000.0,
-      'isCredit': true
-    },
-    {
-      'date': '25 Sept 2025',
-      'description': 'Bank Jay - Sassuolo',
-      'accountNumber': '17023341431414141',
-      'amount': 50000.0,
-      'isCredit': false
-    },
-    {
-      'date': '24 Sept 2025',
-      'description': 'Bank Xin - RRQ',
-      'accountNumber': '17023341431414141',
-      'amount': 300000.0,
-      'isCredit': false
-    },
-  ];
-
   Map<String, List<TransactionEntity>> _groupByDate(
     List<TransactionEntity> transactions,
   ) {
@@ -110,11 +72,14 @@ class TransactionHistory extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 8.0),
-                    child: Text(dateKey, style: appTheme.textTheme.bodySmall),
+                    child: Text(
+                      dateKey,
+                      style: appTheme.textTheme.bodySmall,
+                    ),
                   ),
-                  ...transactions
-                      .map((tx) => TransactionItem(transaction: tx))
-                      .toList(),
+                  ...transactions.map(
+                    (tx) => TransactionItem(transaction: tx),
+                  ),
                 ],
               );
             },

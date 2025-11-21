@@ -29,6 +29,10 @@ Future<void> initHomeModule(GetIt sl) async {
       () => GetTransactionUsecase(sl<HomeRepository>()));
 
   sl.registerFactory(
-    () => HomeCubit(sl<HomeRepository>()),
+    () => HomeCubit(
+      sl<GetBalanceUsecase>(),
+      sl<GetCardsUsecase>(),
+      sl<GetTransactionUsecase>(),
+    ),
   );
 }
