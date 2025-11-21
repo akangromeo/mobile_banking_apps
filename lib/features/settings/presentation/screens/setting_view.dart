@@ -249,7 +249,10 @@ class SettingView extends StatelessWidget {
               ),
             ],
           ),
-          bottomNavigationBar: const BottomNavigationUser(selectedIndex: 3),
+          bottomNavigationBar: const SafeArea(
+            bottom: true,
+            child: BottomNavigationUser(selectedIndex: 3),
+          ),
         );
       },
     );
