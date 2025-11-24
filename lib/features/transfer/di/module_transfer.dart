@@ -6,10 +6,12 @@ import 'package:mobile_banking_apps/features/home/domain/usecases/get_cards_usec
 import 'package:mobile_banking_apps/features/transfer/data/datasources/remote/transfer_remote_datasource.dart';
 import 'package:mobile_banking_apps/features/transfer/data/repositories/transfer_repository_impl.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/repositories/transfer_repository.dart';
+import 'package:mobile_banking_apps/features/transfer/domain/usecases/check_beneficiary_usecase.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/usecases/get_banks_usecase.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/usecases/get_methods_usecase.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/usecases/post_transfer_usecase.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/bank_cubit.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/bloc/beneficiary_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_input_cubit.dart';
 
@@ -30,11 +32,25 @@ Future<void> initTransferModule(GetIt sl) async {
 
   //usecase
   sl.registerLazySingleton<GetBanksUsecase>(
-      () => GetBanksUsecase(sl<TransferRepository>()));
+    () => GetBanksUsecase(
+      sl<TransferRepository>(),
+    ),
+  );
   sl.registerLazySingleton<GetMethodsUsecase>(
-      () => GetMethodsUsecase(sl<TransferRepository>()));
+    () => GetMethodsUsecase(
+      sl<TransferRepository>(),
+    ),
+  );
   sl.registerLazySingleton<PostTransferUsecase>(
-      () => PostTransferUsecase(sl<TransferRepository>()));
+    () => PostTransferUsecase(
+      sl<TransferRepository>(),
+    ),
+  );
+  sl.registerLazySingleton<CheckBeneficiaryUsecase>(
+    () => CheckBeneficiaryUsecase(
+      sl<TransferRepository>(),
+    ),
+  );
 
   //cubit
   sl.registerFactory(
@@ -52,6 +68,11 @@ Future<void> initTransferModule(GetIt sl) async {
   sl.registerFactory(
     () => TransferCubit(
       sl<PostTransferUsecase>(),
+    ),
+  );
+  sl.registerFactory(
+    () => BeneficiaryCubit(
+      sl<CheckBeneficiaryUsecase>(),
     ),
   );
 }
