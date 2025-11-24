@@ -16,7 +16,6 @@ class TransferDestinationBankScreen extends StatefulWidget {
 class _TransferDestinationBankScreenState
     extends State<TransferDestinationBankScreen> {
   final List<BankEntity> allBanks = [];
-
   List<BankEntity> filteredBanks = [];
 
   @override
@@ -132,7 +131,7 @@ class _TransferDestinationBankScreenState
                           final bank = filteredBanks[index];
                           return InkWell(
                             onTap: () {
-                              Navigator.pop(context, bank.bankName);
+                              Navigator.pop(context, bank);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(

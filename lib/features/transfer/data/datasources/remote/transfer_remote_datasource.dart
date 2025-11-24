@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:mobile_banking_apps/core/exceptions/app_exception.dart';
 import 'package:mobile_banking_apps/core/network/api_client.dart';
 import 'package:mobile_banking_apps/core/services/auth_service.dart';
 import 'package:mobile_banking_apps/features/transfer/data/models/bank_model.dart';
+import 'package:mobile_banking_apps/features/transfer/data/models/beneficiary_model.dart';
 import 'package:mobile_banking_apps/features/transfer/data/models/method_model.dart';
 import 'package:mobile_banking_apps/features/transfer/data/models/transfer_model.dart';
 
@@ -11,6 +11,10 @@ abstract class TransferRemoteDatasource {
   Future<List<BankModel>> getBanks();
   Future<List<MethodModel>> getMethods();
   Future<String> postTransfer(TransferModel transfer);
+  Future<BeneficiaryModel> checkBeneficiary({
+    required String internalAccountNumber,
+    required double amount,
+  });
 }
 
 class TransferRemoteDatasourceImpl implements TransferRemoteDatasource {
@@ -97,6 +101,30 @@ class TransferRemoteDatasourceImpl implements TransferRemoteDatasource {
       }
 
       throw ServerException(serverMsg);
+    }
+  }
+
+  @override
+  Future<BeneficiaryModel> checkBeneficiary({
+    required String internalAccountNumber,
+    required double amount,
+  }) async {
+    try {
+      final response = await apiClient.post(
+        "/user/transaction/transfer/check-beneficiary",
+        data: {
+          "internal_account_number": internalAccountNumber,
+          "amount": amount
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return BeneficiaryModel.fromJson(response.data);
+      } else {
+        throw ServerException("Failed to login. Please Try Again.");
+      }
+    } on DioException catch (e) {
+      throw ServerException(e.message ?? "Unknown Error.");
     }
   }
 }

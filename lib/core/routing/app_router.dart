@@ -18,6 +18,7 @@ import 'package:mobile_banking_apps/features/home/presentation/screens/home_scre
 import 'package:mobile_banking_apps/features/settings/presentation/bloc/profile_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/domain/entities/transfer_entitiy.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/bank_cubit.dart';
+import 'package:mobile_banking_apps/features/transfer/presentation/bloc/beneficiary_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/bloc/transfer_input_cubit.dart';
 import 'package:mobile_banking_apps/features/transfer/presentation/screens/transfer_destination_bank_screen.dart';
